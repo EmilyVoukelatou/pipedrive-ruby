@@ -89,6 +89,16 @@ module Pipedrive
           bad_response(res)
         end
       end
+      
+      def update(id, opts = {} )
+        res = put "#{resource_path}/#{id}", :body => opts
+        if res.success?
+          res['data'] = opts.merge res['data']
+          new(res)
+        else
+          bad_response(res)
+        end
+      end
 
       def find(id)
         res = get "#{resource_path}/#{id}"
